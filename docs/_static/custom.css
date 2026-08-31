@@ -1,0 +1,40 @@
+:root {
+  --mlo-navy: #10152c;
+  --mlo-gold: #d4a72c;
+}
+
+.wy-side-nav-search,
+.wy-nav-top {
+  background: var(--mlo-navy);
+}
+
+.wy-side-nav-search > a,
+.wy-side-nav-search .wy-dropdown > a {
+  font-weight: 700;
+}
+
+.rst-content code.literal {
+  color: #5b2c06;
+}
+
+.rst-content .admonition-title {
+  font-weight: 700;
+}
+
+.rst-content h1,
+.rst-content h2,
+.rst-content h3 {
+  color: var(--mlo-navy);
+}
+
+.rst-content a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.workflow-box {
+  border-left: 4px solid var(--mlo-gold);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background: #faf8f1;
+}
