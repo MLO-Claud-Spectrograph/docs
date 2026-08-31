@@ -1,5 +1,5 @@
 MLO Spectrograph Software
-========================
+=========================
 
 This site is the unified user and developer documentation for the software
 supporting the MLO fiber-fed spectrograph. The software is intentionally split
