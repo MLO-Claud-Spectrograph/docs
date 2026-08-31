@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 project = "MLO Spectrograph Software"
 author = "Caden Gobat (SDSU)"
-copyright = f"{datetime.now(timezone.utc).year}, {author}"
+copyright = f"{datetime.now(timezone.utc).year}, San Diego State University"
 
 extensions = []
 
