@@ -40,11 +40,8 @@ data, and template spectra are shared across packages through the
 
 .. note::
 
-   The documentation distinguishes physical instrument assumptions from
-   software defaults. In particular, the current design uses a multi-fiber
-   linear bundle and the simulator supports the seven-fiber geometry developed
-   for the instrument, but fiber count should not be treated as a permanent
-   software invariant.
+   The majority of the content on this site was machine-generated using GPT-5.6
+   based on the contents of the various software repositories.
 
 Start here
 ----------
