@@ -8,6 +8,21 @@ The ICS is the web-based control and monitoring layer for the spectrograph. It
 keeps acquisition logic separate from the scientific reduction packages and
 provides interchangeable hardware backends for development and deployment.
 
+Installation and launch
+-----------------------
+
+The distribution is named ``spectrograph-ics``, requires Python 3.11 or newer,
+and installs the ``ics`` Python package. From a sibling checkout, install and
+launch it with:
+
+.. code-block:: bash
+
+   python -m pip install -e ./ics
+   spectrograph-ics
+
+Application modules therefore use imports such as ``ics.web`` and
+``ics.devices``; ``src`` is the source directory, not the import namespace.
+
 Backend selection
 -----------------
 

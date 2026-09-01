@@ -31,7 +31,9 @@ After acquisition
 -----------------
 
 #. Process the detector calibrations.
-#. Trace and optimally extract every useful fiber.
+#. Trace and boxcar-extract every useful fiber with the current Level-1 path;
+   use Horne/optimal extraction only when explicitly selecting that available
+   implementation.
 #. Apply wavelength calibration and propagate masks and uncertainties.
 #. Perform sky/background subtraction at a stage that preserves the individual
    fiber measurements needed for quality control.
@@ -43,6 +45,6 @@ Reproducibility
 ---------------
 
 Record the versions (or Git commit hashes) of the ETC, simulator, pipeline, and
-shared-data package used for an observation or simulation campaign. A change to
-a throughput curve can alter both the ETC prediction and the simulator even when
-no Python source code changes.
+``spectrograph-shared-data`` distribution used for an observation or simulation
+campaign. A change to a throughput curve can alter both the ETC prediction and
+the simulator even when no Python source code changes.

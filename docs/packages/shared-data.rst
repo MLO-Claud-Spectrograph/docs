@@ -4,7 +4,7 @@ shared-data
 Purpose
 -------
 
-``shared-data`` is an installable Python distribution containing common
+``spectrograph-shared-data`` is an installable Python distribution containing common
 spectrograph reference files. It exists so that each scientific repository can
 declare a dependency on one authoritative data package instead of carrying a
 private copy of the same curves.
@@ -24,7 +24,8 @@ The current distribution contains two top-level data directories:
    │   └── ...
    └── pyproject.toml
 
-The distribution name is ``shared-data`` and the import package is
+The repository is named ``shared-data``, the distribution installed by pip is
+``spectrograph-shared-data``, and the import package is
 ``shared_data``.
 
 The packaging metadata includes ``csv_files/*.csv`` and all files immediately
@@ -33,23 +34,24 @@ under ``reference_spectra`` as package data.
 Accessing packaged files
 ------------------------
 
-Use ``importlib.resources`` rather than constructing a filesystem path from
-``__file__``. This works with normal installations and avoids making callers
-know the package's installation layout.
+The package exposes dictionaries of traversable resources keyed by filename
+stem. Use these as the primary interface rather than constructing paths from
+``__file__``:
 
 .. code-block:: python
 
-   from importlib.resources import files
+   from shared_data import CSV_FILES, REFERENCE_SPECTRA
 
-   import shared_data
-
-   qe_file = files(shared_data) / "csv_files" / "KL400BI_qe.csv"
+   qe_file = CSV_FILES["kaf8300c_qe"]
+   template_file = REFERENCE_SPECTRA["SNIa_max_z0p05"]
 
    with qe_file.open("rb") as handle:
        payload = handle.read()
 
-For libraries that require a real path, use ``importlib.resources.as_file`` so
-the resource remains compatible with different import/package loaders.
+The values support methods such as ``open()`` and can be passed directly to
+many readers. For libraries that require a real filesystem path, wrap a value
+with ``importlib.resources.as_file`` so it remains compatible with different
+package loaders.
 
 What belongs here?
 ------------------

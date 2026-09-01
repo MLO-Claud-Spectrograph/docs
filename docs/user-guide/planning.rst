@@ -13,21 +13,22 @@ The core calculation accepts a reference or target spectrum together with:
 * exposure time;
 * redshift;
 * wavelength-bin centers and bin size;
-* spectral dispersion and spatial extraction width where those are not yet
-  supplied by a higher-level instrument model;
 * sky surface brightness;
 * detector/camera model;
 * grating choice;
-* atmospheric-extinction model;
-* lens throughput;
+* numerical airmass;
 * fiber length;
-* telescope diameter;
 * detector temperature; and
-* optional target magnitude plus magnitude band/system for flux scaling.
+* optional target AB magnitude plus LSST magnitude band for flux scaling.
 
-The ETC currently supports scaling a template spectrum to Johnson ``B`` or ``V``
-photometry in either Vega or AB magnitudes. This is useful when the spectral
+The ETC currently supports scaling a template spectrum to LSST ``g``, ``r``,
+or ``i`` photometry in the AB system. This is useful when the spectral
 shape is known or assumed but only broadband target photometry is available.
+
+Detector sampling, projected fiber width, read noise, telescope collecting
+area, and the component throughput model are derived from the selected camera
+and the shared ``spectrograph-sim`` instrument model rather than entered as
+independent GUI parameters.
 
 Throughput accounting
 ---------------------
@@ -46,9 +47,9 @@ Recommended workflow
 
 #. Choose a representative template spectrum covering the wavelength region of
    interest.
-#. Redshift it as required and scale it to the target's measured ``B`` or ``V``
-   magnitude if absolute flux calibration is needed.
-#. Select the expected camera/grating configuration and atmospheric model.
+#. Redshift it as required and, if needed, scale it to the target's measured
+   LSST ``g``, ``r``, or ``i`` AB magnitude.
+#. Select the expected camera/grating configuration and airmass.
 #. Evaluate several wavelength bins, especially the region containing the
    diagnostic spectral feature that drives the observation.
 #. Adjust exposure time until the limiting bin reaches the desired S/N.

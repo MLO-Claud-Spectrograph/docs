@@ -13,21 +13,21 @@ shared calibration/reference files from being copied into every repository.
    :header-rows: 1
    :widths: 20 80
 
-   * - Repository/package
+   * - Repository / distribution / import
      - Role
-   * - ``etc``
+   * - ``etc`` / ``spectrograph-etc`` / ``etc``
      - Predict source and sky counts and signal-to-noise for a supplied spectrum,
        instrument configuration, exposure time, and optional photometric scaling.
-   * - ``simulator``
+   * - ``sim`` / ``spectrograph-sim`` / ``simulator``
      - Forward-model spectra through the optical geometry and detector to produce
        realistic synthetic data products.
-   * - ``pipeline``
+   * - ``pipeline`` / ``spectrograph-pipeline`` / ``pipeline``
      - Reduce detector frames and extract one-dimensional spectra from the fiber
        traces, carrying masks and uncertainties through the reduction.
-   * - ``shared-data``
+   * - ``shared-data`` / ``spectrograph-shared-data`` / ``shared_data``
      - Installable package containing common CSV calibration/reference curves and
        reference spectra.
-   * - instrument-control system (ICS)
+   * - ``ics`` / ``spectrograph-ics`` / ``ics``
      - Operate and monitor the science camera, camera-lens focus, telescope-side
        guide hardware, and related observatory interfaces.
 
@@ -41,15 +41,16 @@ A typical checkout can look like this:
 
    spectrograph/
    ├── etc/
-   ├── simulator/
+   ├── sim/
    ├── pipeline/
    ├── shared-data/
    ├── ics/
    └── docs/
 
 Create a virtual environment and install the packages you need. Package metadata
-should declare ``shared-data`` as a dependency rather than asking users to copy
-its files manually.
+should declare ``spectrograph-shared-data`` as a dependency rather than asking
+users to copy its files manually. Repository, distribution, and import names
+are not always identical; the table above lists them in that order.
 
 .. code-block:: bash
 
@@ -58,8 +59,14 @@ its files manually.
    python -m pip install -U pip
    python -m pip install -e ./shared-data
    python -m pip install -e ./etc
-   python -m pip install -e ./simulator
+   python -m pip install -e ./sim
    python -m pip install -e ./pipeline
+   python -m pip install -e ./ics
+
+The ICS requires Python 3.11 or newer. Once installed, launch it with
+``spectrograph-ics``; its Python modules are imported under ``ics`` (for
+example, ``ics.web``). The ETC and pipeline likewise provide the
+``spectrograph-etc`` and ``spectrograph-pipeline`` commands.
 
 The ICS can be kept in a separate environment because hardware-control stacks can
 have tighter platform and version constraints than the analysis software.

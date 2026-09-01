@@ -36,7 +36,7 @@ The normal path through the software is:
 
 Reference throughput curves, detector-response data, atmospheric-extinction
 data, and template spectra are shared across packages through the
-``shared-data`` distribution where practical.
+``spectrograph-shared-data`` distribution where practical.
 
 .. note::
 
