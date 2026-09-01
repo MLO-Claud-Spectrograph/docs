@@ -48,6 +48,7 @@ Start here
 
 * :doc:`getting-started` -- install the software and understand the repository split.
 * :doc:`user-guide/index` -- end-to-end guide from planning through extracted spectra.
+* :doc:`hardware/index` -- instrument optics, camera, and controllers.
 * :doc:`packages/index` -- package-by-package documentation.
 * :doc:`reference/conventions` -- units, coordinate, detector, and spectrum conventions.
 * :doc:`development` -- how the repositories fit together and how to update these docs.
@@ -58,6 +59,7 @@ Start here
 
    getting-started
    user-guide/index
+   hardware/index
    packages/index
    reference/index
    development
