@@ -2,9 +2,9 @@ Camera lens: Canon EF 100mm f/2 USM
 ===================================
 
 The camera optic is a Canon ``EF 100mm f/2 USM`` prime lens. Its nominal 100 mm
-focal length, together with the 180 mm :doc:`collimator`, sets the overall
-magnification. Focus and aperture are electromechanically controlled by the
-:doc:`Pinefeat lens controller <lens-controller>`.
+focal length, together with the :doc:`180 mm collimator <collimator>`, sets the
+overall magnification. Focus and aperture are electromechanically controlled by
+the :doc:`Pinefeat lens controller <lens-controller>`.
 
 .. list-table:: Key catalog properties
    :header-rows: 1
