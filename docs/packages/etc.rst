@@ -17,9 +17,9 @@ properties are:
 ``get_SNR_from_spectrum(...)``
    Calculate counts and S/N for one or more wavelength bins.
 
-``load_spectrum(spectrum_file, z)``
-   Load a two-column reference spectrum and place its wavelength grid in the
-   frame expected by the current calculator.
+``load_spectrum(spectrum_file)``
+   Load a two-column reference spectrum whose wavelength grid is already in
+   the observer frame.
 
 ``scale_spectrum_to_magnitude(...)``
    Scale a template spectrum to a target LSST ``g``, ``r``, or ``i`` AB
@@ -32,6 +32,11 @@ properties are:
 
 ``available_camera_models`` / ``available_gratings``
    Enumerate the configurations represented by the installed reference data.
+
+The ETC interprets input-spectrum wavelengths, ``wave_centers``, and
+``binsize`` in the observer frame. It does not apply a redshift correction; a
+rest-frame template must be transformed to the observer frame before it is
+passed to the calculator.
 
 Result structure
 ----------------
@@ -61,7 +66,6 @@ Example
    result = calc.get_SNR_from_spectrum(
        exp_time=1800.0,
        spectrum_file=get_default_spectrum_file(),
-       z=0.05,
        wave_centers=[550.0, 650.0, 750.0],
        binsize=5.0,
        camera_model="STF8300",

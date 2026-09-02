@@ -8,11 +8,11 @@ for a source spectrum and instrument configuration.
 Inputs
 ------
 
-The core calculation accepts a reference or target spectrum together with:
+The core calculation accepts a reference or target spectrum whose wavelengths
+are in the observer frame, together with:
 
 * exposure time;
-* redshift;
-* wavelength-bin centers and bin size;
+* observer-frame wavelength-bin centers and bin size;
 * sky surface brightness;
 * detector/camera model;
 * grating choice;
@@ -24,6 +24,11 @@ The core calculation accepts a reference or target spectrum together with:
 The ETC currently supports scaling a template spectrum to LSST ``g``, ``r``,
 or ``i`` photometry in the AB system. This is useful when the spectral
 shape is known or assumed but only broadband target photometry is available.
+
+The ETC does not apply a redshift correction. If a template is in the rest
+frame, transform it to the observer frame before supplying it to the ETC. The
+requested wavelength-bin centers and bin size must likewise describe the
+observer frame.
 
 Detector sampling, projected fiber width, read noise, telescope collecting
 area, and the component throughput model are derived from the selected camera
@@ -47,8 +52,9 @@ Recommended workflow
 
 #. Choose a representative template spectrum covering the wavelength region of
    interest.
-#. Redshift it as required and, if needed, scale it to the target's measured
-   LSST ``g``, ``r``, or ``i`` AB magnitude.
+#. If it is a rest-frame template, transform it to the observer frame before
+   supplying it to the ETC. If needed, scale it to the target's measured LSST
+   ``g``, ``r``, or ``i`` AB magnitude.
 #. Select the expected camera/grating configuration and airmass.
 #. Evaluate several wavelength bins, especially the region containing the
    diagnostic spectral feature that drives the observation.

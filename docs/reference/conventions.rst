@@ -48,6 +48,12 @@ A single spectrum uses one wavelength array and one flux-density array of the
 same length. A multi-fiber simulator input uses one common wavelength array and
 a flux-density matrix shaped ``(fiber_count, n_wavelength)``.
 
+For the ETC, the wavelengths in a two-column input spectrum are observer-frame
+quantities. Requested wavelength-bin centers and bin sizes are also specified
+in the observer frame. The ETC does not apply a redshift correction, so
+rest-frame templates must be transformed before they are supplied to the
+calculator.
+
 Wavelength direction
 --------------------
 
