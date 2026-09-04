@@ -13,12 +13,12 @@ are in the observer frame, together with:
 
 * exposure time;
 * observer-frame wavelength-bin centers and bin size;
-* sky surface brightness;
+* sky background (``dark``, ``grey``, or ``bright``);
 * detector/camera model;
 * grating choice;
 * numerical airmass;
 * fiber length;
-* detector temperature; and
+* fiber-coupling efficiency; and
 * optional target AB magnitude plus LSST magnitude band for flux scaling.
 
 The ETC currently supports scaling a template spectrum to LSST ``g``, ``r``,
@@ -30,10 +30,15 @@ frame, transform it to the observer frame before supplying it to the ETC. The
 requested wavelength-bin centers and bin size must likewise describe the
 observer frame.
 
-Detector sampling, projected fiber width, read noise, telescope collecting
-area, and the component throughput model are derived from the selected camera
-and the shared ``spectrograph-sim`` instrument model rather than entered as
-independent GUI parameters.
+Fiber-coupling efficiency is a fraction from 0 to 1 representing point-source
+light lost before entering the fiber. It reduces source counts but not sky
+counts. The default of 1.0 assumes perfect coupling.
+
+Detector sampling, fiber pitch, extraction fraction, read noise, telescope
+collecting area, and the component throughput model are derived from the
+selected camera and the shared ``spectrograph-sim`` instrument model rather
+than entered as independent GUI parameters. The default instrument
+configuration is the FLI Kepler camera with the Newport 1294 grating.
 
 Throughput accounting
 ---------------------
@@ -43,9 +48,22 @@ them into the total response. This makes it possible to inspect detector,
 grating, fiber, atmosphere, and lens contributions individually and to disable a
 term for diagnostic comparisons.
 
-The reported result for each wavelength bin includes source counts, sky counts,
-S/N, and mean component throughputs. Detector read noise and dark current are
-included in the noise budget.
+The ``dark``, ``grey``, and ``bright`` choices select line-resolved DESI sky
+spectra. Each sky spectrum is integrated on its own finely sampled wavelength
+grid over the fiber's circular on-sky area, preserving narrow airglow lines.
+Because these spectra represent surface brightness at the observatory,
+atmospheric extinction is not applied to them again.
+
+The spatial extraction box is one fiber pitch wide, extending halfway toward
+the centerline of each neighboring trace. Source and sky counts are multiplied
+by the fraction of the assumed Gaussian fiber profile enclosed by that box.
+Fiber coupling is then applied only to the source. Dark-current and read-noise
+variance use the same extraction-box pixel count. The detector temperature is
+not a user input: the ETC uses each camera's fixed dark-current value at -20 °C
+and records that assumption in the result metadata.
+
+The reported result for each wavelength bin includes source counts, sky
+counts, S/N, and mean component throughputs.
 
 Recommended workflow
 --------------------
@@ -55,7 +73,9 @@ Recommended workflow
 #. If it is a rest-frame template, transform it to the observer frame before
    supplying it to the ETC. If needed, scale it to the target's measured LSST
    ``g``, ``r``, or ``i`` AB magnitude.
-#. Select the expected camera/grating configuration and airmass.
+#. Select the expected camera/grating configuration, airmass, and dark, grey,
+   or bright sky background.
+#. Estimate the point-source fiber-coupling efficiency for the observing setup.
 #. Evaluate several wavelength bins, especially the region containing the
    diagnostic spectral feature that drives the observation.
 #. Adjust exposure time until the limiting bin reaches the desired S/N.

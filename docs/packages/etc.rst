@@ -15,7 +15,9 @@ Primary interface
 properties are:
 
 ``get_SNR_from_spectrum(...)``
-   Calculate counts and S/N for one or more wavelength bins.
+   Calculate counts and S/N for one or more wavelength bins. The default
+   configuration uses the FLI Kepler camera, Newport 1294 grating, dark-sky
+   background, and a fiber-coupling efficiency of 1.0.
 
 ``load_spectrum(spectrum_file)``
    Load a two-column reference spectrum whose wavelength grid is already in
@@ -30,8 +32,9 @@ properties are:
    window, detector-QE, and total-throughput arrays on a supplied wavelength
    grid.
 
-``available_camera_models`` / ``available_gratings``
-   Enumerate the configurations represented by the installed reference data.
+``available_camera_models`` / ``available_gratings`` / ``available_sky_backgrounds``
+   Enumerate the camera, grating, and ``dark``, ``grey``, or ``bright`` sky
+   configurations represented by the installed reference data.
 
 The ETC interprets input-spectrum wavelengths, ``wave_centers``, and
 ``binsize`` in the observer frame. It does not apply a redshift correction; a
@@ -48,8 +51,11 @@ Result structure
    sky counts, S/N, and mean component throughputs.
 
 ``meta``
-   Resolved detector/instrument values such as read noise, dispersion, spatial
-   aperture, grating, airmass, and any spectrum-scaling factor.
+   Resolved detector/instrument values such as read noise, dispersion,
+   ``extraction_aperture_pix``, ``extraction_fraction``, grating, airmass,
+   ``fiber_coupling_efficiency``, ``sky_background``, and any spectrum-scaling
+   factor. ``detector_temperature_c`` records the fixed -20 °C operating
+   assumption used to select each camera's dark current.
 
 ``throughput_plot``
    Wavelength and component arrays suitable for plotting the response used in
@@ -68,15 +74,24 @@ Example
        spectrum_file=get_default_spectrum_file(),
        wave_centers=[550.0, 650.0, 750.0],
        binsize=5.0,
-       camera_model="STF8300",
+       sky_background="grey",
+       camera_model="Kepler",
        grating_id=1294,
        airmass=1.3,
+       fiber_coupling_efficiency=0.75,
        target_magnitude=17.5,
        magnitude_band="g",
    )
 
    for bin_result in result["bins"]:
        print(bin_result.wave_center_nm, bin_result.snr)
+
+The coupling efficiency is a fraction from 0 to 1 and reduces source counts
+only. The selected line-resolved DESI sky spectrum is integrated over the
+fiber's circular on-sky area independently of that coupling loss. Source and sky
+counts are both multiplied by the Gaussian-profile fraction enclosed by a
+spatial extraction box one fiber pitch wide. Dark-current and read-noise
+variance use the pixel count in that same extraction box.
 
 Data dependency
 ---------------
