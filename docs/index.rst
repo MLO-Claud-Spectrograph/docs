@@ -1,10 +1,11 @@
-MLO Spectrograph Software
-=========================
+MLO CLASSI Spectrograph
+=======================
 
 This site is the unified user and developer documentation for the software
-supporting the MLO fiber-fed spectrograph. The software is intentionally split
-into focused repositories, but users should be able to approach the instrument
-as one system rather than learning each repository in isolation.
+supporting the MLO CLASSI (Claud Low-resolution Array-fed Small Scale Integral
+field) spectrograph. The software is split into focused repositories, but users
+should approach the instrument as one system rather than learning each
+repository in isolation.
 
 The normal path through the software is:
 
